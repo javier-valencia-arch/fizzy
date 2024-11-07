@@ -11,6 +11,7 @@ module Filter::Params
   end
 
   included do
+    after_initialize :sanitize_params
     before_validation :sanitize_params
   end
 
