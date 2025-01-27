@@ -2,15 +2,13 @@
   --grid-lines: 3px;
 
   border-block-start: 1px solid var(--color-subtle);
-  display: none;
+  display: grid;
   gap: var(--grid-lines);
   grid-template-columns: repeat(4, 1fr);
   padding-block-start: var(--block-space);
 }
 
 .event--cluster {
-  display: contents;
-
   /* FIXME re-enable this once we can set grid-column-start and grid-row-start on the cluster element */
 
   /* &:has(.event + .event) {
@@ -27,24 +25,10 @@
 
 .event {
   margin: var(--inline-space);
-
-  &.out-of-range {
-    display: none;
-  }
 }
 
 .events--none {
   padding: calc(3 * var(--block-space));
-}
-
-.events--day:has(.event:not(.out-of-range)) {
-  .events {
-    display: grid;
-  }
-
-  .events--none {
-    display: none;
-  }
 }
 
 .event-grid-item {
@@ -55,7 +39,7 @@
   inline-size: 100%;
   min-block-size: var(--block-space);
 
-  &:nth-child(1n + 57) {
+  &:nth-child(1n + 53) {
     background-color: var(--color-highlight);
   }
 

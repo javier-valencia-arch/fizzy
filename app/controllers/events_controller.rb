@@ -2,15 +2,17 @@ class EventsController < ApplicationController
   before_action :set_activity_day
 
   def index
-    @events = Event.
-      where(bubble: user_bubbles).
-      where(created_at: @activity_day.yesterday.beginning_of_day..@activity_day.tomorrow.end_of_day).
+    @events = user_events.where(created_at: @activity_day.all_day).
       group_by { |event| [ event.created_at.hour, helpers.event_column(event) ] }
 
     @next_day = @activity_day.yesterday.strftime("%Y-%m-%d")
   end
 
   private
+    def user_events
+      Event.where(bubble: user_bubbles)
+    end
+
     def user_bubbles
       Current.user.accessible_bubbles.published_or_drafted_by(Current.user)
     end

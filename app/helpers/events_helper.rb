@@ -23,15 +23,20 @@ module EventsHelper
     end
   end
 
+  def event_cluster_tag(hour, col, &)
+    row = 25 - hour
+    tag.div class: "event--cluster", style: "grid-area: #{row}/#{col}", &
+  end
+
   def event_next_page_link(next_day)
     tag.div id: "next_page", data: { controller: "fetch-on-visible", fetch_on_visible_url_value: events_path(day: next_day) }
   end
 
   def render_event_grid_cells(day, columns: 4, rows: 24)
     safe_join((2..rows + 1).map do |row|
+      current_hour = row == 25 - Time.current.hour
       (1..columns).map do |col|
-        time = day.beginning_of_day + (rows - row + 1).hours
-        tag.div class: "event-grid-item", style: "grid-area: #{row}/#{col};", data: { datetime: time.iso8601, timeline_target: "cell" }
+        tag.div class: class_names("event-grid-item", "current-hour": current_hour), style: "grid-area: #{row}/#{col};"
       end
     end.flatten)
   end
@@ -50,8 +55,7 @@ module EventsHelper
           datetime: time.strftime("%H:%M")
         ),
         class: "event-grid-time",
-        style: "grid-area: #{25 - (hour * 23/24)}/2 / #{25 - (hour * 23/24)}/4;",
-        data: { timeline_target: "cell", datetime: time.iso8601 }
+        style: "grid-area: #{25 - (hour * 23/24)}/2 / #{25 - (hour * 23/24)}/4;"
       )
     end)
   end

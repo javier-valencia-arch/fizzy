@@ -1,4 +1,4 @@
-<div class="events--day margin-block-end-double pad-block-end" data-controller="timeline" data-timeline-date-value="<%= activity_day.to_date.iso8601 %>">
+<div class="events--day margin-block-end-double pad-block-end">
   <h2 class="txt-x-large margin-block-end"><%= event_day_title(activity_day) %></h2>
 
   <div class="center events">
@@ -6,10 +6,10 @@
     <%= render_event_grid_cells(activity_day) %>
     <%= render_time_labels(activity_day) %>
 
-    <% events.each do |_, cluster| %>
-      <div class="event--cluster">
+    <% events.each do | hour_column, cluster| %>
+      <%= event_cluster_tag(*hour_column) do %>
         <%= render cluster %>
-      </div>
+      <% end %>
     <% end %>
 
   </div>
