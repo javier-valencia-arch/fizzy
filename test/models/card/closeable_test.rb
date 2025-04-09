@@ -18,8 +18,8 @@ class Card::CloseableTest < ActiveSupport::TestCase
   test "auto_close_all_due" do
     cards(:logo, :shipping).each(&:reconsider)
 
-    cards(:logo).update!(last_active_at: 1.day.ago - Card::Closeable::AUTO_CLOSURE_AFTER)
-    cards(:shipping).update!(last_active_at: 1.day.from_now - Card::Closeable::AUTO_CLOSURE_AFTER)
+    cards(:logo).update!(last_active_at: 1.day.ago - Card::Closeable::AUTO_CLOSE_AFTER)
+    cards(:shipping).update!(last_active_at: 1.day.from_now - Card::Closeable::AUTO_CLOSE_AFTER)
 
     assert_difference -> { Card.closed.count }, +1 do
       Card.auto_close_all_due
