@@ -5,8 +5,7 @@ module User::Role
     enum :role, %i[ admin member system ].index_by(&:itself), scopes: false
 
     scope :member, -> { where(role: :member) }
-    scope :without_system, -> { where.not(role: :system) }
-    scope :active, -> { without_system.where(active: true) }
+    scope :active, -> { where(active: true).where.not(role: :system) }
   end
 
   class_methods do
