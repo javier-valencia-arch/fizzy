@@ -28,8 +28,4 @@ class Notifier
     def should_notify?
       !creator.system?
     end
-
-    def resource
-      source
-    end
 end
