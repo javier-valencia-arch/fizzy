@@ -164,6 +164,7 @@ export default class extends Controller {
 
   #showOutput(html) {
     this.element.classList.add(this.outputClass)
+    console.debug("PUT ON ", this.outputTarget);
     this.outputTarget.innerHTML = html
   }
 
