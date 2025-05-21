@@ -71,7 +71,7 @@
   .tray__actions {
     --hover-size: 0;
 
-    align-items: center;
+    align-items: stretch;
     border: 1px dashed color-mix(in srgb, var(--color-white) 40%, var(--color-ink));
     border-radius: 0.5em;
     color: var(--color-ink-inverted);
@@ -96,6 +96,25 @@
       transition: none;
     }
 
+    /* Get the circle buttons to be full-height without magic numbers */
+    form {
+      aspect-ratio: 1;
+
+      .btn {
+        block-size: 100%;
+        inline-size: 100%;
+      }
+    }
+
+    .btn {
+      opacity: 0.66;
+
+      &:hover,
+      &:focus-visible {
+        opacity: 1;
+      }
+    }
+
     @media (prefers-color-scheme: dark) {
       .btn--reversed {
         color: var(--color-ink);
@@ -114,7 +133,6 @@
     inset: auto 0 0 0;
     padding: 0;
     position: absolute;
-    z-index: 6;
 
     .tray[open] &,
     .tray:not(:has(.tray__item)) &,
@@ -197,7 +215,6 @@
   /* ------------------------------------------------------------------------ */
 
   .tray--pins {
-    /* inset: auto auto var(--block-space-half) var(--inline-space); */
     inset-inline: var(--inline-space) auto;
 
     .tray__item {
@@ -265,7 +282,6 @@
   /* ------------------------------------------------------------------------ */
 
   .tray--notifications {
-    /* inset: auto var(--inline-space) var(--block-space-half) auto; */
     inset-inline: auto var(--inline-space);
 
     .tray__item:nth-child(1n + 7) {
@@ -273,7 +289,7 @@
     }
 
     &:not(:has(.card--notification)) {
-      .tray__notification-read_action {
+      .tray__notification-read-action {
         visibility: hidden;
       }
     }

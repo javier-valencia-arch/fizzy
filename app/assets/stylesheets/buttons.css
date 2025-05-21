@@ -1,6 +1,6 @@
 @layer components {
   .btn {
-    --transition: 300ms ease;
+    --transition: 150ms ease;
     --btn-border-radius: 2em;
 
     align-items: center;

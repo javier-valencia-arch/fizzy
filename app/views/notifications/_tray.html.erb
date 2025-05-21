@@ -11,19 +11,25 @@
     <% end %>
   </div>
 
+  <button class="tray__expander" data-action="dialog#toggle" aria-label="Expand notifications stack"></button>
+
   <div class="tray__actions">
     <%= button_to read_all_notifications_path,
-          class: "tray__notification-read_action btn btn--reversed fill-transparent borderless flex-item-justify-start shadow txt-xx-small",
+          class: "tray__notification-read-action btn btn--reversed fill-transparent borderless flex-item-justify-start shadow txt-xx-small",
+          title: "Mark all as read",
           data: { action: "click->dialog#close", turbo_frame: "notifications" } do %>
-      <%= icon_tag "check" %> <span class="for-screen-reader">Mark all read</span>
+      <%= icon_tag "check" %>
     <% end %>
 
     <%= link_to tag.span("Notifications"), notifications_path,
-          class: "btn btn--reversed borderless fill-transparent translucent shadow center txt-uppercase txt-x-small full-width",
+          class: "btn btn--reversed borderless fill-transparent shadow center txt-uppercase txt-x-small full-width",
           data: { action: "click->dialog#close" } %>
 
-    <span class="btn btn--placeholder txt-xx-small borderless"></span>
+    <%= button_to settings_notifications_path,
+          class: "tray__notification-settings-action btn btn--reversed fill-transparent borderless flex-item-justify-start shadow txt-xx-small",
+          title: "Notification settings",
+          data: { action: "click->dialog#close", turbo_frame: "notifications" } do %>
+      <%= icon_tag "settings" %>
+    <% end %>
   </div>
-
-  <button class="tray__expander" data-action="dialog#toggle" aria-label="Expand notifications stack"></button>
 </dialog>
