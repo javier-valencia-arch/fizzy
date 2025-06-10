@@ -18,6 +18,7 @@ class Public::Collections::CardPreviewsController < ApplicationController
           @collection.cards.closed.recently_closed_first
         else
           head :bad_request
+          Card.none
       end
     end
 end

@@ -1,7 +1,7 @@
 <%= turbo_stream.remove "#{params[:target]}-load-page-#{@page.number}" %>
 
 <%= turbo_stream.append params[:target] do %>
-  <%= render partial: "cards/display/preview",
+  <%= render partial: "cards/display/public_preview",
         collection: @page.records, as: :card, cached: true %>
 
   <% unless @page.last? %>
