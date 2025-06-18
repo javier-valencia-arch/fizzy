@@ -49,19 +49,12 @@
     flex-direction: column;
     gap: var(--cards-gap);
     justify-content: start;
-    padding: 0 var(--reserved-bubble-space) var(--cards-gap) var(--cards-gap);
+    padding: 0 var(--cards-gap) var(--cards-gap);
     position: relative;
 
     /* Make sure filter dialogs don't end up behind sticky headers */
     &:has([open]) {
       z-index: 3;
-    }
-
-    &:first-child {
-      @media (min-width: 640px) {
-        border-inline-end: 1px solid var(--color-ink-lighter);
-        padding-inline: var(--reserved-bubble-space) var(--cards-gap);
-      }
     }
 
     @media (max-width: 639px) {
@@ -155,7 +148,10 @@
   /* ------------------------------------------------------------------------ */
 
   .cards--considering {
-    padding-inline-start: calc(var(--cards-gap) / 2);
+    @media (min-width: 640px) {
+      border-inline-end: 1px solid var(--color-ink-lighter);
+      padding-inline: var(--reserved-bubble-space) var(--cards-gap);
+    }
 
     .card {
       --text-xx-large: 1.6em;
@@ -213,13 +209,20 @@
   /* Doing
   /* ------------------------------------------------------------------------ */
 
-  @media (max-width: 639px) {
-    .cards--doing:before {
-      background: var(--gradient-border);
-      block-size: 1px;
-      content: "";
-      inset: 0 0 auto;
-      position: absolute;
+  .cards--doing {
+    @media (min-width: 640px) {
+      /* border-inline-end: 1px solid var(--color-ink-lighter); */
+      padding-inline: var(--cards-gap) var(--reserved-bubble-space);
+    }
+
+    @media (max-width: 639px) {
+      &::before {
+        background: var(--gradient-border);
+        block-size: 1px;
+        content: "";
+        inset: 0 0 auto;
+        position: absolute;
+      }
     }
   }
 
@@ -308,12 +311,5 @@
         }
       }
     }
-  }
-
-  /* Doing
-  /* ------------------------------------------------------------------------ */
-
-  .cards--doing {
-    padding-inline-end: calc(var(--cards-gap) / 2);
   }
 }
