@@ -4,7 +4,7 @@ class Search::Result < ApplicationRecord
   belongs_to :comment, foreign_key: :comment_id, optional: true
 
   def source
-    comment || card
+    comment_id.present? ? comment : card
   end
 
   def readonly?
