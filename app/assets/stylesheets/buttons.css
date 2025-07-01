@@ -2,6 +2,7 @@
   .btn {
     --icon-size: var(--btn-icon-size, 1.3em);
     --btn-border-radius: 99rem;
+    --btn-hover-brightness: 0.9;
 
     align-items: center;
     background-color: var(--btn-background, var(--color-canvas));
@@ -22,8 +23,12 @@
 
     @media (any-hover: hover) {
       &:hover {
-        filter: brightness(0.85);
+        filter: brightness(var(--btn-hover-brightness));
       }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --btn-hover-brightness: 1.5;
     }
 
     &[disabled],
@@ -114,7 +119,12 @@
     --btn-background: var(--color-ink);
     --btn-border-color: var(--color-canvas);
     --btn-color: var(--color-canvas);
+    --btn-hover-brightness: 2;
     --outline-color: var(--color-ink);
+
+    @media (prefers-color-scheme: dark) {
+      --btn-hover-brightness: 0.8;
+    }
   }
 
   /* Toggleable buttons
