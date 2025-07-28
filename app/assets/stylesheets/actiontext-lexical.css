@@ -178,6 +178,7 @@
     display: flex;
     gap: var(--lexical-prompt-padding);
     padding: var(--lexical-prompt-padding);
+    white-space: nowrap;
 
     &:hover {
       background-color: var(--color-ink-lightest);

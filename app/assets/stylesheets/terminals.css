@@ -3,10 +3,9 @@
     --row-gap: 0.2lh;
 
     background-color: var(--color-terminal-bg);
-    border-block-start: 1px solid var(--color-ink-light);
     color: var(--color-terminal-text);
     font-family: var(--font-mono);
-    font-size: var(--text-normal);
+    font-size: 0.9em;
     inset: auto 0 0 0;
     max-block-size: 100%;
     padding: var(--block-space) calc(var(--tray-size) + calc(var(--inline-space) * 3)) calc(var(--block-space) + env(safe-area-inset-bottom));
@@ -105,7 +104,7 @@
     }
   }
 
-  .terminal__input:is(.input) {
+  .terminal__input {
     --input-border-color: transparent;
     --input-border-radius: 0.3em;
     --input-color: var(--color-terminal-text);
@@ -113,20 +112,42 @@
     accent-color: var(--color-terminal-text);
     caret-color: var(--color-terminal-text);
     font-family: inherit;
-
-    &::placeholder {
-      color: var(--color-terminal-text-light);
-      opacity: 0.5;
-    }
-
-    &:focus::placeholder {
-      opacity: 0.7;
-    }
+    font-weight: 500;
+    text-align: start;
 
     &.lexical-editor--empty {
       overflow: hidden;
+      text-align: center;
       text-overflow: ellipsis; 
       white-space: nowrap;
+
+      &:focus-within {
+        text-align: start;
+
+        .lexical-editor__content::before {
+          inset: 0;
+          transform: translateX(0);
+        }
+      }
+
+      .lexical-editor__content::before {
+        color: var(--color-ink);
+        inline-size: 100%;
+        inset: 0 0 0 50%;
+        opacity: 0.5;
+        transform: translateX(-50%);
+        transform-origin: start start;
+        transition: inset 150ms ease-in;
+
+        @starting-style {
+          inset: 0 0 0 50%;
+          transform: translateX(-50%);
+        }
+      }
+    }
+
+    .terminal--busy:is(:not(.terminal--confirmation)) & {
+      animation: pulse 1.5s infinite;
     }
 
     .terminal--confirmation & {
@@ -152,20 +173,6 @@
         list-style: none;
         margin: 0;
         padding: 0;
-      }
-    }
-  }
-
-  .terminal__label {
-    font-weight: 600;
-
-    .terminal--busy:is(:not(.terminal--confirmation)) & {
-      animation: pulse 1s infinite;
-    }
-
-    &:has(~ .terminal__input:focus-within) {
-      @media (max-width: 640px) {
-        display: none;
       }
     }
   }
