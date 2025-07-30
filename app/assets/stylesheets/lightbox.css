@@ -1,8 +1,11 @@
 @layer components {
   .lightbox {
-    background-color: oklch(var(--lch-canvas) / 0.66);
+    --dialog-duration: 250ms;
+
+    background-color: transparent;
     block-size: 100dvh;
     border: 0;
+    display: grid;
     inline-size: 100dvw;
     inset: 0;
     margin: auto;
@@ -10,29 +13,34 @@
     max-width: unset;
     overflow: hidden;
     padding: var(--block-space-half) var(--inline-space);
+    place-items: center;
 
     &::backdrop {
-      -webkit-backdrop-filter: blur(66px);
-      backdrop-filter: blur(66px);
-      background-color: var(--color-ink);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      background-color: oklch(var(--lch-canvas) / 50%);
+    }
+
+    /* Default transition state */
+    &, &::backdrop, img {
       opacity: 0;
+      transition: var(--dialog-duration) allow-discrete;
+      transition-property: display, opacity, overlay, transform;
+    }
+
+    img {
+      transform: translateY(10dvh);
     }
 
     &[open] {
-      display: grid;
-      opacity: 1;
-      place-items: center;
-
-      &::backdrop {
-        opacity: 0.75;
+      &, &::backdrop, img {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
     @starting-style {
-      &[open] {
-        opacity: 0;
-      }
-
+      &[open],
       &[open]::backdrop {
         opacity: 0;
       }
