@@ -1,6 +1,6 @@
 @layer components {
   .lightbox {
-    --dialog-duration: 250ms;
+    --dialog-duration: 350ms;
 
     background-color: transparent;
     block-size: 100dvh;
