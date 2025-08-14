@@ -31,7 +31,7 @@
 
   <%= link_to account_settings_path, class: "popup__group btn borderless", data: { filter_target: "item", navigable_list_target: "item", controller: "hotkey", action: "keydown.6@document->hotkey#click keydown.shift+6@document->hotkey#click" } do %>
     <%= icon_tag "settings" %>
-    <span>Settings</span>
+    <span>Account <span class="visually-hidden">Settings</span></span>
     <kbd>6</kbd>
   <% end %>
 </div>
