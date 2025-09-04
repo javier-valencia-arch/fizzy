@@ -1,6 +1,6 @@
 <%= turbo_frame_tag workflow do %>
   <article class="panel" style="--panel-size: 40ch;" style="view-transition-name: <%= dom_id(workflow) %>">
-    <div class="flex gap-half align-center justify-starts">
+    <div class="flex gap-half align-center">
       <%= turbo_frame_tag dom_id(workflow, :header) do %>
         <%= link_to edit_workflow_path(workflow) do %>
           <h3 class="txt-large txt-nowrap margin-none overflow-ellipsis"><%= workflow.name %></h3>
