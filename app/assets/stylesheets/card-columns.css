@@ -5,7 +5,7 @@
   /* Card contents are resized via container queries. We're using #main here as
      the primary container so all cards have the same container reference */
   #main:has(.card-columns) {
-    --cards-gap: min(1.5cqi, 1.5rem);
+    --cards-gap: min(1.7cqi, 1.7rem);
     --gradient-border: linear-gradient(to right,var(--color-canvas), var(--color-ink) 3%, var(--color-ink) 97%, var(--color-canvas));
     --reserved-bubble-space: 0;
     --bubble-gap: 0.5rem;
@@ -135,9 +135,11 @@
     }
 
     .progress {
+      --max-height: 360px;
+
       background-color: color-mix(in srgb, var(--card-color) 30%, var(--color-canvas));
       border-radius: 0.2em;
-      inline-size: calc(var(--collapsed) + calc(var(--cards-gap) / 2));
+      inline-size: var(--collapsed);
       margin-block-start: 2.5em;
       position: absolute;
       z-index: -1;
@@ -147,32 +149,35 @@
       }
     }
     
-    .progress-1 { block-size: 5%; }
-    .progress-2 { block-size: 10%; }
-    .progress-3 { block-size: 15%; }
-    .progress-4 { block-size: 20%; }
-    .progress-5 { block-size: 25%; }
-    .progress-6 { block-size: 30%; }
-    .progress-7 { block-size: 35%; }
-    .progress-8 { block-size: 40%; }
-    .progress-9 { block-size: 45%; }
-    .progress-10 { block-size: 50%; }
-    .progress-11 { block-size: 55%; }
-    .progress-12 { block-size: 60%; }
-    .progress-13 { block-size: 65%; }
-    .progress-14 { block-size: 70%; }
-    .progress-15 { block-size: 75%; }
-    .progress-16 { block-size: 80%; }
-    .progress-17 { block-size: 85%; }
-    .progress-18 { block-size: 90%; }
-    .progress-19 { block-size: 95%; }
-    .progress-20 { block-size: 100%; }
+    .progress-1 { block-size: calc(var(--max-height) * 0.05); }
+    .progress-2 { block-size: calc(var(--max-height) * 0.10); }
+    .progress-3 { block-size: calc(var(--max-height) * 0.15); }
+    .progress-4 { block-size: calc(var(--max-height) * 0.20); }
+    .progress-5 { block-size: calc(var(--max-height) * 0.25); }
+    .progress-6 { block-size: calc(var(--max-height) * 0.30); }
+    .progress-7 { block-size: calc(var(--max-height) * 0.35); }
+    .progress-8 { block-size: calc(var(--max-height) * 0.40); }
+    .progress-9 { block-size: calc(var(--max-height) * 0.45); }
+    .progress-10 { block-size: calc(var(--max-height) * 0.50); }
+    .progress-11 { block-size: calc(var(--max-height) * 0.55); }
+    .progress-12 { block-size: calc(var(--max-height) * 0.60); }
+    .progress-13 { block-size: calc(var(--max-height) * 0.65); }
+    .progress-14 { block-size: calc(var(--max-height) * 0.70); }
+    .progress-15 { block-size: calc(var(--max-height) * 0.75); }
+    .progress-16 { block-size: calc(var(--max-height) * 0.80); }
+    .progress-17 { block-size: calc(var(--max-height) * 0.85); }
+    .progress-18 { block-size: calc(var(--max-height) * 0.90); }
+    .progress-19 { block-size: calc(var(--max-height) * 0.95); }
+    .progress-20 { block-size: calc(var(--max-height) * 1.00); }
 
     .cards__expander-count {
       background-color: color-mix(in srgb, var(--card-color) 30%, var(--color-canvas));
+      block-size: var(--collapsed);
       border-radius: 0.2em;
       display: none;
-      padding: 0.5em 1em;
+      font-size: var(--text-x-small);
+      inline-size: var(--collapsed);
+      line-height: var(--collapsed);
 
       .cards.is-collapsed & {
         display: initial;
@@ -474,6 +479,7 @@
 
   .cards--closed {
     margin-block: var(--cards-gap);
+    margin-inline-start: var(--cards-gap);
 
     @media (min-width: 640px) {
       padding-inline: var(--cards-gap);
