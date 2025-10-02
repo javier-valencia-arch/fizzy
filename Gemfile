@@ -71,7 +71,7 @@ group :test do
 end
 
 require_relative "lib/bootstrap"
-unless Bootstrap.local_authentication?
+unless Bootstrap.oss_config?
   eval_gemfile "gems/fizzy-saas/Gemfile"
   gem "fizzy-saas", path: "gems/fizzy-saas"
 end

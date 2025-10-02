@@ -13,7 +13,7 @@ end
 def create_tenant(signal_account_name, bare: false)
   if bare
     tenant_id = Digest::SHA256.hexdigest(signal_account_name)[0..8].to_i(16)
-  elsif Rails.application.config.x.local_authentication
+  elsif Rails.application.config.x.oss_config
     tenant_id = ActiveRecord::FixtureSet.identify signal_account_name
   else
     signal_account = SignalId::Account.find_by_product_and_name!("fizzy", signal_account_name)
@@ -22,7 +22,7 @@ def create_tenant(signal_account_name, bare: false)
 
   ApplicationRecord.destroy_tenant tenant_id
   ApplicationRecord.create_tenant(tenant_id) do
-    account = if bare || Rails.application.config.x.local_authentication
+    account = if bare || Rails.application.config.x.oss_config
       Account.create(name: signal_account_name, tenant_id: tenant_id).tap do
         User.create!(
           name: "David Heinemeier Hansson",

@@ -11,7 +11,7 @@ system("bundle config set --local auto_install true")
 system("bundle check") || system!("bundle install")
 
 require_relative "../lib/bootstrap"
-load File.expand_path("../gems/fizzy-saas/bin/setup", __dir__) unless Bootstrap.local_authentication?
+load File.expand_path("../gems/fizzy-saas/bin/setup", __dir__) unless Bootstrap.oss_config?
 
 puts "\n== Preparing database =="
 if ARGV.include?("--reset")
