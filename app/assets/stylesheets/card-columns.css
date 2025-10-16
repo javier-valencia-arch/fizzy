@@ -103,9 +103,8 @@
   .cards__list {
     display: grid;
     gap: var(--cards-gap);
-    margin-block-start: -1ch;
     margin-inline: -1ch;
-    padding: 1ch;
+    padding-inline: 1ch;
     overflow: hidden;
 
     .card {
