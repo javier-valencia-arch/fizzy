@@ -3,6 +3,5 @@ module Collection::Broadcastable
 
   included do
     broadcasts_refreshes
-    broadcasts_refreshes_to ->(_) { :collections }
   end
 end
