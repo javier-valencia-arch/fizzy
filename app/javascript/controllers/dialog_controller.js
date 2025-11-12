@@ -44,6 +44,7 @@ export default class extends Controller {
     this.dialogTarget.blur()
     orient(this.dialogTarget, false)
     limitHeightToViewport(this.dialogTarget, false)
+    this.dispatch("close")
   }
 
   closeOnClickOutside({ target }) {

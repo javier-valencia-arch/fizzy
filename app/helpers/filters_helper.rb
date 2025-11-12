@@ -28,7 +28,7 @@ module FiltersHelper
 
   def filter_dialog(label, &block)
     tag.dialog class: "margin-block-start-half popup panel flex-column align-start gap-half fill-white shadow txt-small", data: {
-      action: "turbo:before-cache@document->dialog#close keydown->navigable-list#navigate filter:changed->navigable-list#reset toggle->filter#filter",
+      action: "turbo:before-cache@document->dialog#close keydown->navigable-list#navigate filter:changed->navigable-list#reset toggle->filter#filter dialog:close@document->filter#clearInput",
       aria: { label: label, aria_description: label },
       controller: "filter navigable-list",
       dialog_target: "dialog",
