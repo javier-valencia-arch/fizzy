@@ -122,10 +122,14 @@ export default class extends Controller {
   #insertDraggedItem(container, item) {
     const itemContainer = container.querySelector("[data-drag-drop-item-container]")
     const topItems = itemContainer.querySelectorAll("[data-drag-and-drop-top]")
+    const firstTopItem = topItems[0]
     const lastTopItem = topItems[topItems.length - 1]
 
-    if (lastTopItem) {
-      lastTopItem.after(item)
+    const isTopItem = item.hasAttribute("data-drag-and-drop-top")
+    const referenceItem = isTopItem ? firstTopItem : lastTopItem
+
+    if (referenceItem) {
+      referenceItem[isTopItem ? "before" : "after"](item)
     } else {
       itemContainer.prepend(item)
     }
