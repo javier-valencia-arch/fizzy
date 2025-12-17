@@ -93,10 +93,10 @@ end
 
 **Problema:**
 - Existen 4 advertencias de seguridad ignoradas en `config/brakeman.ignore`:
-  1. **Dangerous Send** en Events::DayTimeline::ColumnsController (línea 35) - High confidence
-  2. **Mass Assignment** en PaginationHelper (línea 56) - Medium confidence
-  3. **Remote Code Execution** en Notifier (línea 79) - Medium confidence
-  4. **SQL Injection** (2 instancias) en Card::Entropic (líneas 9 y 117) - Weak confidence
+  1. **Dangerous Send** en Events::DayTimeline::ColumnsController (línea 19) - High confidence
+  2. **Mass Assignment** en PaginationHelper (línea 14) - Medium confidence
+  3. **Remote Code Execution (Unsafe Reflection)** en Notifier (línea 8) - Medium confidence
+  4. **SQL Injection** (2 instancias) en Card::Entropic (líneas 10 y 19) - Weak confidence
 
 **Impacto:**
 - El uso de `params[:id]` en `public_send` permite ejecución de métodos arbitrarios
@@ -105,7 +105,7 @@ end
 
 **Solución Recomendada:**
 ```ruby
-# En Events::DayTimeline::ColumnsController línea 35
+# En Events::DayTimeline::ColumnsController línea 19
 # ANTES:
 Current.user.timeline_for(day, :filter => filter).public_send("#{params[:id]}_column")
 
@@ -115,9 +115,19 @@ column_name = params[:id]
 raise ArgumentError unless ALLOWED_COLUMNS.include?(column_name)
 Current.user.timeline_for(day, :filter => filter).public_send("#{column_name}_column")
 
-# En PaginationHelper línea 56
+# En PaginationHelper línea 14
 # Reemplazar params.permit! con lista explícita de parámetros permitidos
 params.permit(:page, :per_page, :sort, :direction, :filter_id)
+
+# En Notifier línea 8
+# ANTES:
+"Notifier::#{Event.eventable.class}EventNotifier".safe_constantize
+
+# DESPUÉS:
+ALLOWED_NOTIFIERS = %w[Card Comment Board User].freeze
+eventable_type = Event.eventable.class.name
+raise ArgumentError unless ALLOWED_NOTIFIERS.include?(eventable_type)
+"Notifier::#{eventable_type}EventNotifier".safe_constantize
 ```
 
 ---
@@ -388,22 +398,26 @@ We will respond within 48 hours.
 
 **Problema:**
 - CSP permite `unsafe-inline` para estilos (línea 59 de config/initializers/content_security_policy.rb)
+  - **Nota:** Esto es intencional para no interferir con herramientas de usuario y extensiones de accesibilidad
 - Política de imágenes demasiado permisiva: `blob:`, `data:`, `https:` (línea 60)
 - No hay CSP report-uri configurado por defecto para monitorear violaciones
 
 **Impacto:**
-- Mayor superficie de ataque para XSS mediante estilos inline
-- Posible exfiltración de datos mediante imágenes externas
-- Sin visibilidad de intentos de violación de CSP
+- Equilibrio entre seguridad y accesibilidad: `unsafe-inline` aumenta superficie de ataque XSS pero permite extensiones de usuario
+- Posible exfiltración de datos mediante imágenes externas desde dominios no confiables
+- Sin visibilidad de intentos de violación de CSP para detectar ataques
 
 **Solución Recomendada:**
 ```ruby
 # Mejorar config/initializers/content_security_policy.rb
-policy.style_src :self, *sources.(:style_src)
-# Eliminar :unsafe_inline y usar nonces para estilos si es necesario
+# NOTA: La configuración actual permite :unsafe_inline para estilos intencionalmente
+# para no interferir con herramientas de usuario y extensiones de accesibilidad.
+# Si se decide restringir, considerar usar nonces o hash-based CSP:
+policy.style_src :self, :unsafe_inline, *sources.(:style_src)
+# Mantener :unsafe_inline o migrar gradualmente a nonces
 
 policy.img_src :self, "data:", "https://*.cloudfront.net", *sources.(:img_src)
-# Restringir a dominios específicos en lugar de https: completo
+# Restringir a dominios específicos en lugar de https: completo cuando sea posible
 
 # Configurar report-uri
 config.content_security_policy do |policy|
