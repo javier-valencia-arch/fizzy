@@ -8,7 +8,7 @@
 
 Este informe presenta los resultados de una auditoría de seguridad integral de la aplicación Fizzy, una herramienta de gestión de proyectos tipo Kanban desarrollada por 37signals/Basecamp. La auditoría se enfocó en identificar vulnerabilidades de seguridad, problemas de configuración, y oportunidades de mejora en la arquitectura y las prácticas de desarrollo.
 
-**Nota:** Todas las referencias a archivos, números de línea y métricas en este informe han sido verificadas contra el código fuente al momento de la auditoría.
+**Nota:** Todas las referencias a archivos, números de línea y métricas en este informe han sido verificadas contra el código fuente al momento de la auditoría. Los números de línea específicos pueden cambiar con modificaciones futuras del código; use las referencias como guía y verifique la ubicación exacta en su versión del código.
 
 ### Hallazgos Principales
 
