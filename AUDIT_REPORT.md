@@ -1,12 +1,14 @@
 # Informe de Auditoría de Seguridad - Fizzy
 
-**Fecha:** 17 de diciembre de 2025  
+**Fecha:** 17 de diciembre de 2024  
 **Auditor:** Sistema Automatizado de Análisis de Seguridad  
 **Versión de la Aplicación:** Rails 8.2.0-alpha
 
 ## Resumen Ejecutivo
 
 Este informe presenta los resultados de una auditoría de seguridad integral de la aplicación Fizzy, una herramienta de gestión de proyectos tipo Kanban desarrollada por 37signals/Basecamp. La auditoría se enfocó en identificar vulnerabilidades de seguridad, problemas de configuración, y oportunidades de mejora en la arquitectura y las prácticas de desarrollo.
+
+**Nota:** Todas las referencias a archivos, números de línea y métricas en este informe han sido verificadas contra el código fuente al momento de la auditoría.
 
 ### Hallazgos Principales
 
